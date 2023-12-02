@@ -33,14 +33,12 @@ def get_first_digit(line):
 
 def get_last_digit(line):
     string = ""
-    for i in range(1, len(line)):
+    for i in range(1, len(line)+1):
         string = ""
-        for j in range(i, len(line)):
+        for j in range(i, len(line)+1):
             string = line[len(line)-j] + string
             if is_digit(string):
                 return string_to_int(string)
-    string = line[0]
-    return string_to_int(string)
 
 def main():
     answer = 0
