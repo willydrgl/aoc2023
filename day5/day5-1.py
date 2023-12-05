@@ -12,7 +12,7 @@ def process_numbers(_numbers, _map):
 def main():
 
     # Converting file to usable format
-    with open("example.txt", "r", encoding='utf8') as file:
+    with open("input.txt", "r", encoding='utf8') as file:
         data = file.read().replace('\n', ' ')
     data = re.split('  ', data)
 
