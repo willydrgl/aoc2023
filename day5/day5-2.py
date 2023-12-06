@@ -57,27 +57,63 @@ def main():
     ranges = []
     for i in range(int(len(seeds)/2)):
         ranges.append([seeds[i*2], seeds[i*2] + seeds[i*2+1]])
-
-
-    
+    #print("Initial ranges: ", len(ranges))
+    # Processing numbers
     for m in maps:
-        print(m)
+        #print("Map : ", m)
+        to_remove = []
+        to_add = []
         for t in ranges:
+            #print("Range : ", t)
             for a in m:
-                if t[1] > a[1] > t[0]:
-
-                    ranges.append([t[0], a[1]])
-                    ranges.append([a[1] + a[2], t[1]])
+                if t[0] < a[1] <= a[1] + a[2] < t[1]:
+                    to_add.append([t[0], a[1] - 1])
+                    to_add.append([a[1] + a[2], t[1]])
+                    to_add.append([a[1], a[1] + a[2] - 1])
+                    to_remove.append(t)
+                    #print("Comparing to range ", a[1], " - ", a[1] + a[2])
+                    #print("Spliting a", t, " into ", [t[0], a[1]], " and ", [a[1] + a[2], t[1]])
+                    break
+                elif t[0] < a[1] < t[1]:
+                    to_add.append([t[0], a[1]])
+                    to_add.append([a[1] - 1, t[1]])
+                    to_remove.append(t)
+                    #print("Comparing to range ", a[1], " - ", a[1] + a[2])
+                    #print("Spliting b", t, " into ", [t[0], a[1]], " and ", [a[1], t[1]])
+                    break
+                elif t[0] < a[1] + a[2] < t[1]:
+                    to_add.append([t[0], a[1] + a[2]])
+                    to_add.append([a[1] + a[2] - 1, t[1]])
+                    to_remove.append(t)
+                    #print("Comparing to range ", a[1], " - ", a[1] + a[2])
+                    #print("Spliting c", t, " into ", [t[0], a[1] + a[2]], " and ", [a[1] + a[2], t[1]])
                     break
 
+        #print("Need to remove : ", len(to_remove))
+        for t in to_remove:
+            ranges.remove(t)
+        #print("Ranges left : ", len(ranges))
+
+        #print("Need to add : ", len(to_add))
+        for t in to_add:
+            ranges.append(t)
+        #print("Ranges left : ", len(ranges))
+
+        #print("Converting...")
         for i in range(len(ranges)):
+            #print("Converting ", ranges[i], "...")
             ranges[i] = process_range(ranges[i], m)
+            #print("... into ", ranges[i])
+
 
     locations = []
     for p in ranges:
         locations.append(p[0])
-        locations.append(p[1])
+        print(p[0])
     print(min(locations))
+
+
+
     
     """
     numbers2 = []
@@ -97,10 +133,6 @@ def main():
                     numbers[i] = a[0] + (numbers[i] - a[1])
     return min(numbers)
     """
-
-
-
-
 
 
     """
