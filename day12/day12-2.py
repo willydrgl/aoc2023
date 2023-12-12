@@ -29,6 +29,11 @@ def main():
         for line in file:
             data.append(re.split(' ', line[:-1]))
 
+        # :clown:
+        for e in data:
+            e[0] = ((e[0]+'?')*5)[:-1]
+            e[1] = ((e[1]+',')*5)[:-1]
+
     for i, e in enumerate(data):
         row = e[0]
         sizes = re.findall(r'[0-9]+', e[1])
